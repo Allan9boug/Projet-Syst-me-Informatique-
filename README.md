@@ -1,4 +1,4 @@
-CyberQuiz est une application Web en JavaScript (un jeu de quiz sur la cybersécurité) 
+Projet_Systeme_Informatique est une application Web en JavaScript (un jeu de quiz sur la cybersécuritégit) 
 pour former les élèves, les professeurs et le personnel du lycée de manière interactive sur :
 - le fonctionnement du SI du lycée,
 - comment créer un ticket d'incident,
