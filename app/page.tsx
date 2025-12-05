@@ -39,6 +39,7 @@ export default function Home() {
   const [questionIndex, setQuestionIndex] = useState(0);
   const [explication, setExplication] = useState("");
   const [afficherExplication, setAfficherExplication] = useState(false);
+  const pseudo = typeof window !== "undefined" ? localStorage.getItem("pseudo") : "";
 
   const question = questions[questionIndex];
 
