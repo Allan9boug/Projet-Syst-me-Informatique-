@@ -54,7 +54,7 @@ export default function Home() {
   useEffect(() => {
     async function fetchQuestion() {
       const { data, error } = await supabase
-        .from<question>("question")
+        .from("question")
         .select(`
           id,
           texte,
