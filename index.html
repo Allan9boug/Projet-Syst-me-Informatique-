@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Créateur de Personnage</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        text-align: center;
+    }
+    .avatar-container {
+        width: 200px;
+        height: 260px;
+        margin: 20px auto;
+        position: relative;
+        background: #fff;
+        border-radius: 10px;
+        border: 2px solid #ccc;
+    }
+    .layer {
+        position: absolute;
+        width: 100%;
+        font-size: 80px;
+        text-align: center;
+    }
+    select {
+        margin: 10px;
+        padding: 5px;
+        font-size: 16px;
+    }
+    #startQuiz {
+        margin-top: 20px;
+        padding: 10px 20px;
+        font-size: 18px;
+        background: rgb(0, 140, 255);
+        border: none;
+        color: #fff;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+</style>
+</head>
+<body>
+
+<h1>🎨 Crée ton personnage avant le quiz !</h1>
+
+<div class="avatar-container">
+    <div id="hat" class="layer"></div>
+    <div id="face" class="layer">🙂</div>
+    <div id="glasses" class="layer"></div>
+    <div id="mustache" class="layer"></div>
+</div>
+
+<!-- Choix des options -->
+<label>🧢 Couvre-chef :</label>
+<select id="hatSelect">
+    <option value="">Aucun</option>
+    <option value="🧢">Casquette</option>
+    <option value="🎩">Chapeau</option>
+    <option value="👑">Couronne</option>
+</select>
+
+<br>
+
+<label>👓 Lunettes :</label>
+<select id="glassesSelect">
+    <option value="">Aucun</option>
+    <option value="👓">Lunettes rondes</option>
+    <option value="🕶️">Lunettes noires</option>
+</select>
+
+<br>
+
+<label>👨 Moustache :</label>
+<select id="mustacheSelect">
+    <option value="">Aucune</option>
+    <option value="👨🏻‍🦱">Moustache 1</option>
+    <option value="👨🏻‍🦰">Moustache 2</option>
+</select>
+
+<br><br>
+
+<button id="startQuiz">🚀 Commencer le quiz</button>
+
+<script>
+    // Mise à jour automatique du personnage
+    document.getElementById("hatSelect").addEventListener("change", () => {
+        document.getElementById("hat").innerHTML = document.getElementById("hatSelect").value;
+    });
+
+    document.getElementById("glassesSelect").addEventListener("change", () => {
+        document.getElementById("glasses").innerHTML = document.getElementById("glassesSelect").value;
+    });
+
+    document.getElementById("mustacheSelect").addEventListener("change", () => {
+        document.getElementById("mustache").innerHTML = document.getElementById("mustacheSelect").value;
+    });
+
+    // Bouton pour lancer le quiz
+    document.getElementById("startQuiz").addEventListener("click", () => {
+        alert("Ton personnage est prêt ! Le quiz va commencer 😎");
+        // 👉 Ici tu peux rediriger vers ton quiz :
+        // window.location.href = "quiz.html";
+    });
+</script>
+
+</body>
+</html>
