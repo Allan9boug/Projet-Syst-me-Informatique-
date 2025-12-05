@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 
 // Tableau des avatars OpenPeeps (fichiers SVG à mettre dans /public)
 const avatars = [
-  { id: 1, src: "public/avatars/peep-1.svg", color: "#FF6B6B" },
+  { id: 1, src: "/avatars/peep-1.svg", color: "#FF6B6B" },
   { id: 2, src: "/avatars/peep-2.svg", color: "#4ECDC4" },
   { id: 3, src: "/avatars/peep-3.svg", color: "#FFD93D" },
   { id: 4, src: "/avatars/peep-4.svg", color: "#1A535C" },
