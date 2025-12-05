@@ -1,95 +1,102 @@
 "use client";
-
 import { useState } from "react";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 
-export default function Profil() {
-  const router = useRouter();
+const avatars = [
+  "/avatars/peep-1.svg",
+  "/avatars/peep-2.svg",
+  "/avatars/peep-3.svg",
+  "/avatars/peep-4.svg",
+  "/avatars/peep-5.svg",
+  "/avatars/peep-6.svg",
+  "/avatars/peep-7.svg",
+  "/avatars/peep-8.svg",
+  "/avatars/peep-9.svg",
+  "/avatars/peep-10.svg",
+];
 
-  const [selectedAvatar, setSelectedAvatar] = useState<number | null>(null);
+export default function SelectCharacter() {
+  const [selectedAvatar, setSelectedAvatar] =  useState<string | null>(null);
   const [pseudo, setPseudo] = useState("");
-  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const avatars = Array.from({ length: 10 }, (_, i) => i + 1);
-
-  async function handleSubmit() {
-    if (!selectedAvatar) {
-      return setError("Choisis un avatar !");
-    }
-    if (pseudo.trim().length < 3) {
-      return setError("Le pseudo doit faire au moins 3 caractères.");
+  const handleSave = async () => {
+    if (!pseudo || !selectedAvatar) {
+      alert("Choisis un avatar et entre ton pseudo !");
+      return;
     }
 
-    // Enregistrer dans Supabase
-    const { error } = await supabase.from("utilisateurs").insert({
+    setLoading(true);
+
+    const { error } = await supabase.from("users").insert({
       pseudo: pseudo,
       avatar: selectedAvatar,
     });
 
     if (error) {
       console.error(error);
-      return setError("Erreur pendant l’enregistrement.");
+      alert("Erreur lors de l'enregistrement.");
+    } else {
+      localStorage.setItem("user_pseudo", pseudo);
+      localStorage.setItem("user_avatar", selectedAvatar);
+
+      window.location.href = "/quiz";
     }
 
-    // Sauvegarde locale pour affichage
-    localStorage.setItem("selectedPeep", selectedAvatar.toString());
-    localStorage.setItem("pseudo", pseudo);
-
-    // Redirection → quiz
-    router.push("/");
-  }
+    setLoading(false);
+  };
 
   return (
-    <div className="max-w-3xl mx-auto mt-10">
-      <h1 className="text-3xl font-bold mb-6 text-center">Créer ton profil</h1>
+    <div style={{ padding: "30px", color: "white" }}>
+      <h1>Choisis ton personnage</h1>
 
-      <Card className="p-6">
-        <h2 className="text-xl mb-4 font-semibold">Choisis ton avatar :</h2>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "15px" }}>
+        {avatars.map((av, i) => (
+          <div
+            key={i}
+            onClick={() => setSelectedAvatar(av)}
+            style={{
+              border: selectedAvatar === av ? "3px solid yellow" : "2px solid gray",
+              padding: "10px",
+              borderRadius: "10px",
+              cursor: "pointer",
+            }}
+          >
+            <img src={av} width="90" />
+          </div>
+        ))}
+      </div>
 
-        <div className="grid grid-cols-5 gap-4 mb-6">
-          {avatars.map((num) => (
-            <div
-              key={num}
-              className={`p-2 rounded-xl border cursor-pointer transition ${
-                selectedAvatar === num
-                  ? "border-blue-500 shadow-lg"
-                  : "border-gray-700"
-              }`}
-              onClick={() => setSelectedAvatar(num)}
-            >
-              <Image
-                src={`/peep${num}.svg`}
-                alt={`Avatar ${num}`}
-                width={100}
-                height={100}
-              />
-            </div>
-          ))}
-        </div>
+      <h2>Ton pseudo :</h2>
+      <input
+        type="text"
+        value={pseudo}
+        onChange={(e) => setPseudo(e.target.value)}
+        placeholder="Entre ton pseudo"
+        style={{
+          padding: "8px",
+          borderRadius: "5px",
+          border: "none",
+          marginBottom: "15px",
+          color: "black",
+        }}
+      />
 
-        <h2 className="text-xl font-semibold mb-2">Ton pseudo :</h2>
-        <input
-          type="text"
-          className="border p-2 rounded w-full bg-black/20 text-white"
-          placeholder="Ex : CyberWarrior"
-          value={pseudo}
-          onChange={(e) => setPseudo(e.target.value)}
-        />
+      <br />
 
-        {error && <p className="text-red-500 mt-3">{error}</p>}
-
-        <Button
-          className="w-full mt-6"
-          variant="default"
-          onClick={handleSubmit}
-        >
-          Valider
-        </Button>
-      </Card>
+      <button
+        onClick={handleSave}
+        disabled={loading}
+        style={{
+          padding: "10px 20px",
+          backgroundColor: "blue",
+          color: "white",
+          borderRadius: "5px",
+          cursor: "pointer",
+        }}
+      >
+        {loading ? "Enregistrement..." : "Valider"}
+      </button>
     </div>
   );
 }

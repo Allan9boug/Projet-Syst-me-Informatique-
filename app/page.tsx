@@ -1,5 +1,7 @@
 "use client";
 
+
+
 import PeepSelector from "./PeepSelector";
 import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabaseClient";
@@ -39,7 +41,11 @@ export default function Home() {
   const [questionIndex, setQuestionIndex] = useState(0);
   const [explication, setExplication] = useState("");
   const [afficherExplication, setAfficherExplication] = useState(false);
-  const pseudo = typeof window !== "undefined" ? localStorage.getItem("pseudo") : "";
+  
+  const avatar = typeof window !== "undefined" ? localStorage.getItem("user_avatar") : null;
+  const pseudo = typeof window !== "undefined" ? localStorage.getItem("user_pseudo") : null;
+
+  
 
   const question = questions[questionIndex];
 
@@ -119,6 +125,16 @@ export default function Home() {
           <PeepSelector onSelect={setSelectedAvatar} />
         </div>
       )}
+      
+    <div>
+      <div style={{ position: "absolute", top: 10, left: 10 }}>
+        {avatar && <img src={avatar} width="80" />}
+        {pseudo && <p style={{ color: "white" }}>{pseudo}</p>}
+      </div>
+
+      {/* Le reste de ton quiz */}
+    </div>
+  
 
       {/* Avatar sélectionné affiché en haut à gauche */}
       {selectedAvatar && (
