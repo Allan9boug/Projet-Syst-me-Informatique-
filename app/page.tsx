@@ -53,7 +53,7 @@ export default function Home() {
   useEffect(() => {
     const savedAvatarId = localStorage.getItem("selectedPeep");
     if (savedAvatarId) {
-      setSelectedAvatar({ id: parseInt(savedAvatarId), src: `/peep${savedAvatarId}.svg` });
+      setSelectedAvatar({ id: parseInt(savedAvatarId), src: `/avatars/peep-${savedAvatarId}.svg` });
     }
   }, []);
 
@@ -139,7 +139,7 @@ export default function Home() {
       {/* Avatar sélectionné affiché en haut à gauche */}
       {selectedAvatar && (
         <div style={{ position: "fixed", top: 20, left: 20, zIndex: 50 }}>
-          <img src={selectedAvatar.src} alt="Avatar sélectionné" width={120} />
+          <img src={selectedAvatar.src} alt="Avatar" width={120} />
         </div>
       )}
 
